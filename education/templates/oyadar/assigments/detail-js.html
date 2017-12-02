@@ -1,0 +1,29 @@
+<script>
+    $('.q-answers').on('click','.answer-detail', function () {
+        answer_id = $(this).attr('answer-id');
+        $.ajax({
+            url: '/answer/' + answer_id
+        }).done(function (data) {
+            $('.question-block .q-detail').html(data.cur_question.question_detail);
+            answers = $.parseJSON(data.answers);
+            var li = '';
+            $(answers).each(function (k, v) {
+                console.log(v.pk);
+                li += '<li class="dark-element animation-btn clearfix answer-detail" answer-id="'+ v.pk +'">' +
+                            '<h3 class="pull-left">'+ v.fields.answer_detail +'.</h3>'+
+                            '<button class="btn btn-primary btn-circle pull-right "><i class="fa fa-check"></i></button>'+
+                        '</li>';
+            })
+            $('.question-block .q-answers').html(li);
+        });
+    });
+
+    $('.question-block').on('click', '.next-prev-q', function () {
+        question_id = $(this).attr('question-id');
+        $.ajax({
+            url: '/next-prev/' + question_id
+        }).done(function (html) {
+            $('.question-block').html(html);
+        })
+    })
+</script>

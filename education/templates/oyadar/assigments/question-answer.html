@@ -1,0 +1,36 @@
+<div class="ibox">
+    <div class="ibox-title">
+        <h5 class="text-dark">Assignment 1: </h5>
+        <div class="ibox-tools">
+            <span>Question <b>{{ cur_position }}</b> of <b>{{ num_questions }}</b></span>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <div class="row question-block">
+
+            <h3 class="border-bottom col-lg-12">
+                <div class="p-sm q-detail">
+                    {{ question.question_detail }}
+                </div>
+            </h3>
+            <div class="col-lg-12">
+                <ul class="sortable-list connectList agile-list q-answers">
+                    {% for answer in answers %}
+                         <li class="dark-element animation-btn clearfix answer-detail" answer-id="{{ answer.id }}">
+                            <h3 class="pull-left">{{ answer.answer_detail }}.</h3>
+                            <button class="btn btn-primary btn-circle pull-right "><i class="fa fa-check"></i></button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="ibox-footer clearfix">
+        <div class="float-right">
+            <button question-id="{{ status.prev_question }}" class="btn btn-primary btn-outline btn-rounded next-prev-q"><i class="fa fa-angle-left"></i> Previous </button>
+            <button question-id="{{ status.next_question }}" class="btn btn-primary btn-outline btn-rounded next-prev-q"> Next <i class="fa fa-angle-right"></i></button>
+            <button class="btn btn-primary btn-rounded"> Submit <i class="fa fa-save"></i></button>
+        </div>
+    </div>
+</div>

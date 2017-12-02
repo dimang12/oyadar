@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="col-lg-6 col-lg-offset-3 vertical-middle">
+        <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Basic form <small>Simple login form example</small></h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Sign in</h3>
+                    <p>Sign in today for more expirience.</p>
+                    <form method="POST" action="{% url "login" %}" role="form">
+                        {% csrf_token %}
+{#                        {{ form.as_p }}#}
+                        {% for field in form %}
+                            {{ field.errors }}
+
+
+                            <div class="form-group">
+                                <label for="">{{ field.label }} :</label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                        <div>
+                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs dim" type="submit"><strong>Log in</strong></button>
+                            <label> <input type="checkbox" class="i-checks"> Remember me </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6"><h4>Not a member?</h4>
+                    <p>You can create an account:</p>
+                    <p class="text-center">
+                        <a href="{% url "register" %}"><i class="fa fa-sign-in big-icon"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
