@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^next-prev/(?P<id>\d+)/', assignmentView.nextPrev, name='next-prev'),
 
     url(r'^classes/$', class_view.index ,name='classes'),
+    url(r'^profile/(P<id>\d+)/', profile_view.index, name='profile'),
 
     url(r'^register/', views.register, name="register"),
     url(r'^login/$', auth_views.login, name='login'),

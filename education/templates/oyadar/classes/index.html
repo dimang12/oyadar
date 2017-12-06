@@ -1,4 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <h3>Classes</h3>
+    <div class="row">
+        {% include "oyadar/classes/_class.html" with classes=classes %}
+    </div>
 {% endblock %}
