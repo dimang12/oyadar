@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from oyadar import views
-from oyadar.viewsDir import assignmentView, class_view
+from oyadar.viewsDir import assignmentView, class_view, profile_view
 
 
 urlpatterns = [
@@ -28,8 +28,8 @@ urlpatterns = [
     url(r'^answer/(?P<id>\d+)/', assignmentView.chooseAnswer, name='choose-answer'),
     url(r'^next-prev/(?P<id>\d+)/', assignmentView.nextPrev, name='next-prev'),
 
-    url(r'^classes/$', class_view.index ,name='classes'),
-    url(r'^profile/(P<id>\d+)/', profile_view.index, name='profile'),
+    url(r'^classes/$', login_required(class_view.index) ,name='classes'),
+    url(r'^profile/(?P<id>\d+)/', profile_view.index, name='profile'),
 
     url(r'^register/', views.register, name="register"),
     url(r'^login/$', auth_views.login, name='login'),

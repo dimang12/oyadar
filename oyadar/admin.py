@@ -5,7 +5,7 @@ from django import forms
 
 from django.contrib import admin
 from .models import Assignment,AssigmentQuestion, AssignmentAnswer, TestUser, Class
-from .models import StudentScore
+from .models import StudentScore, Attendance
 
 
 # Register your models here.
@@ -27,6 +27,10 @@ class AnswerAdmin(admin.ModelAdmin):
 class ClassAdmin(admin.ModelAdmin):
     list_display = ["class_name","class_detail"]
 
+
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ["user", "class_id", "total_class", "attended"]
+
     #
     # get_assignment_title.admin_order_field = 'asignment_id__tittle'
     # get_assignment_title.short_description = 'asignment_id__tittle'
@@ -47,3 +51,5 @@ admin.site.register(AssignmentAnswer, AnswerAdmin)
 admin.site.register(TestUser, TestUserAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(StudentScore, StudentScoreAdmin)
+admin.site.register(Attendance, AttendanceAdmin)
+

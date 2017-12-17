@@ -96,3 +96,8 @@
 .agile-list li.dark-element {  border-left: #e1e1e1 solid 3px; }
 .animation-btn .btn {opacity: 0;}
 .animation-btn:hover .btn {animation: fadeInDown 1s ease; opacity: 1;}
+.boder-danger { border: #ff6b60 solid 1px !important;}
+.boder-primary  { border: #1ab394 solid 1px;}
+.agile-list li.selected {
+    border: 1px solid #1ab394;
+}

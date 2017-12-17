@@ -1,5 +1,6 @@
 <script>
     $('.q-answers').on('click','.answer-detail', function () {
+        $(this).addClass('selected');
         answer_id = $(this).attr('answer-id');
         $.ajax({
             url: '/answer/' + answer_id
@@ -19,7 +20,9 @@
     });
 
     $('.question-block').on('click', '.next-prev-q', function () {
+
         question_id = $(this).attr('question-id');
+{#        alert(question_id);#}
         $.ajax({
             url: '/next-prev/' + question_id
         }).done(function (html) {

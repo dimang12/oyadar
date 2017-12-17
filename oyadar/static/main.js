@@ -7,6 +7,19 @@ $(function () {
     $('.vertical-middle').css("top", ((ful_height/2) - (v_height/2) -40 ));
 
     updateDonutChart('.donut-size', 83, true);
+    //get bar chart label
+    label = [];
+    attr_data = [];
+    $('.bar-chart-data li').each(function (k, v) {
+
+        // label.push();
+        attr_data[k]=parseInt($(v).attr('attr-attended'));
+        label[k] = $(v).attr('attr-class');
+
+    });
+    console.log(attr_data);
+    console.log(label);
+
     $('.bar-chart').each(function (k, bar) {
         data = {
           datasets:[{
@@ -18,12 +31,13 @@ $(function () {
         var myBarChart = new Chart(bar, {
             type: 'bar',
             data: {
-                labels: ["CIS 6", "CIS 5", "Bus 1A", "Animation 200"],
+                // labels: ["CIS 6", "CIS 5", "Bus 1A", "Animation 200"],
+                labels: label,
                 datasets: [
                     {
                         label: "Class Attendance",
                         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-                        data: [80,82,75,90]
+                        data: attr_data
                     }
                 ]
             },
@@ -34,7 +48,7 @@ $(function () {
                     yAxes: [{
                         ticks: {
                             beginAtZero:true,
-                            max: 100
+                            max: 30
                         }
                     }]
                 }

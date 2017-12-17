@@ -3,18 +3,21 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-from .models import StudentScore
+from .models import StudentScore, Attendance
 
 # Create your viewsDir here.
 def index(request):
 
     scores = StudentScore.objects.filter(user_id=request.user.id)
+    attendance = Attendance.objects.filter(user= request.user.id)
+    print(attendance)
 
     return render(
         request,
         "oyadar/index.html",
         {
-            "scores": scores
+            "scores": scores,
+            "attendance" : attendance
         }
     )
 

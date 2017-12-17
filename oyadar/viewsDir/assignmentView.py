@@ -7,8 +7,8 @@ from oyadar.models import Assignment, AssigmentQuestion, AssignmentAnswer
 
 
 def index(request):
-    if request.user.is_authenticated():
-        print("Hello")
+    # if request.user.is_authenticated():
+    #     print("Hello")
 
     assignments = Assignment.objects.all()
     return render(
@@ -21,9 +21,14 @@ def detail(request, id):
 
     # return HttpResponse(id)
 
-    try:
+    # try:
         questions = AssigmentQuestion.objects.all().order_by("ordering").filter(assignment_id=id)
+        print(questions)
+
         cur_question = checkCurrentQuestion(questions)["cur_question"]
+
+
+        # return HttpResponse("exit")
         answers = AssignmentAnswer.objects.all().filter(question_id=cur_question.id)
         status = checkCurrentQuestion(questions)
         return render(
@@ -35,8 +40,9 @@ def detail(request, id):
                 "answers": answers
              }
         )
-    except:
-        raise Http404("The item does not exist.")
+    # except:
+        # raise Http404("The item does not exist.")
+
 
 
 def checkCurrentQuestion(questions):
@@ -48,10 +54,14 @@ def checkCurrentQuestion(questions):
             isFinished = False
             object["cur_question"] = questions[order]
             object["cur_order"] = order
-            if order > 0:
-                object["prev_question"] = questions[order - 1].id
-            if order < (len(object) - 1):
-                object["next_question"] = questions[order + 1].id
+            if len(questions) > 1:
+                if order > 0:
+                    object["prev_question"] = questions[order - 1].id
+                if order < (len(object) - 1):
+                    object["next_question"] = questions[order + 1].id
+            else:
+                object["prev_question"] = q.id
+                object["next_question"] = q.id
             break
         order += 1
 
@@ -93,29 +103,94 @@ def nextPrev(request, id):
 
     questions = AssigmentQuestion.objects.filter(assignment_id_id=question.assignment_id_id).order_by("ordering")
 
+
+    print(questions)
+
     # find current position of question
     order = 0
-    cur_position = 1;
-    next_position = 0;
-    prev_position = 0;
+    cur_position = 1
+    next_position = 0
+    prev_position = 0
+    status = {}
 
     for q in questions:
 
         if q.id == int(id):
             cur_position = order + 1
             if(order == 0 and len(questions)>1):
-                next_position = questions[order + 1].objects
+                # status["next_question"] = questions[cur_position + 1].id
+                status["prev_question"] = questions[order].id
+                # next_position = questions[order-1].objects
+            if(order > 0 and order < len(questions)-1 ):
+                status["next_question"] = questions[cur_position].id
+                status["prev_question"] = questions[order-1].id
+            else:
+                status["next_question"] = q.id
+                if(order > 0):
+                    status["prev_question"] = questions[order-1].id
+                else:
+                    status["prev_question"] = questions[order].id
+
         order += 1
+
+
 
     return render(
                 request,
                 "oyadar/assigments/question-answer.html",
                 {
                     "question": question,
-                    "answer": answers,
+                    "answers": answers,
                     "num_questions": len(questions),
-                    "status": checkCurrentQuestion(questions),
-                    "cur_position": cur_position
+                    # "status": checkCurrentQuestion(questions),
+                    "status": status,
+
+                    "cur_position": cur_position,
+                    "next_position": next_position
                 }
             )
+
+def prev(request, id):
+    question = AssigmentQuestion.objects.get(pk=id)
+    answers = AssignmentAnswer.objects.filter(question_id_id=id)
+
+    questions = AssigmentQuestion.objects.filter(assignment_id_id=question.assignment_id_id).order_by("ordering")
+
+    print(questions)
+
+    # find current position of question
+    order = 0
+    cur_position = 1
+    next_position = 0
+    prev_position = 0
+    status = {}
+
+    for q in questions:
+
+        if q.id == int(id):
+            cur_position = order + 1
+            if (order == 0 and len(questions) > 1):
+                # status["next_question"] = questions[cur_position + 1].id
+                status["prev_question"] = questions[order].id
+                next_position = questions[cur_position].objects
+                # prev_position =
+            else:
+                status["next_question"] = questions[cur_position].id
+                status["prev_question"] = questions[cur_position - 1].id
+        order += 1
+
+    return render(
+        request,
+        "oyadar/assigments/question-answer.html",
+        {
+            "question": question,
+            "answers": answers,
+            "num_questions": len(questions),
+            # "status": checkCurrentQuestion(questions),
+            "status": status,
+
+            "cur_position": cur_position,
+            "next_position": next_position
+        }
+    )
 

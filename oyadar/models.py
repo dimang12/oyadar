@@ -40,6 +40,7 @@ class AssignmentAnswer(models.Model):
 
 class Class(models.Model):
     # user = models.ForeignKey(User)
+    professor_name = models.CharField(max_length=150, default="")
     class_name = models.CharField(max_length=100)
     class_detail = models.TextField(default="")
     max_score = models.IntegerField(default=100)
@@ -62,6 +63,11 @@ class StudentScore(models.Model):
     total_score = models.FloatField(default=0.0)
     is_finish = models.BooleanField(default=False)
 
+class Attendance(models.Model):
+    user = models.ForeignKey(User)
+    class_id = models.ForeignKey(Class)
+    total_class = models.IntegerField()
+    attended = models.IntegerField()
 
 
 class TestUser(models.Model):

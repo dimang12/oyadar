@@ -77,6 +77,11 @@
     </div>
 
     <div class="col-lg-4">
+        <ul class="bar-chart-data" style="display: none;">
+        {% for att in attendance %}
+            <li attr-attended="{{ att.attended }}" attr-class="{{ att.class_id.class_name }}">hello</li>
+        {% endfor %}
+        </ul>
         <canvas class="bar-chart" data-score="85" data-label="CIS 5" height="250"></canvas>
     </div>
 </div>
